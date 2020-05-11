@@ -1,8 +1,27 @@
 import request from '@/utils/request'
+import qs from 'qs'
 
-export function getMenusTree() {
+export function getMenusTree(pid) {
   return request({
-    url: 'api/menus/tree',
+    url: 'api/menus/lazy?pid=' + pid,
+    method: 'get'
+  })
+}
+
+export function getMenus(params) {
+  return request({
+    url: 'api/menus',
+    method: 'get',
+    params
+  })
+}
+
+export function getMenuSuperior(ids) {
+  const params = {
+    ids: ids
+  }
+  return request({
+    url: 'api/menus/superior?' + qs.stringify(params, { indices: false }),
     method: 'get'
   })
 }
@@ -38,4 +57,4 @@ export function edit(data) {
   })
 }
 
-export default { add, edit, del, getMenusTree }
+export default { add, edit, del, getMenusTree, getMenuSuperior, getMenus }
